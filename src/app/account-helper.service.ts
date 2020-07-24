@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, from, Observable } from 'rxjs';
+import { forkJoin, from, Observable, combineLatest } from 'rxjs';
 import { concatMap, filter, map, mergeAll, scan, tap } from 'rxjs/operators';
 
 import { AccountBalanceService } from './account-balance.service';
@@ -32,7 +32,7 @@ getActualBalance(account: AppAccount): Observable<number> {
 getTotalBalance(accounts$: Observable<AppAccount[]>): Observable<number> {
     return accounts$.pipe(
       map(accounts => accounts.map(account => this.getActualBalance(account))),
-      concatMap(balances$ => { console.log('balances$', balances$); return forkJoin(balances$); }),
+      concatMap(balances$ => { console.log('balances$', balances$); return combineLatest(balances$); }),
       tap(balances => console.log('balances', balances)),
       map(balances => balances.reduce(
         (amountSum, amount) => {

@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { AppAccount } from './account.model';
 import { AccountHelperService } from './account-helper.service';
 import { AccountService } from './account.service';
+import { AccountBalanceService } from './account-balance.service';
+
 
 @Component({
   selector: 'my-app',
@@ -17,7 +19,8 @@ export class AppComponent  {
 
   constructor(
     private accountService: AccountService,
-    private accountHelperService: AccountHelperService
+    private accountHelperService: AccountHelperService,
+    private balanceService: AccountBalanceService,
   ){
     this.accounts$ = this.accountService.accounts$;
   }
